@@ -10,15 +10,13 @@ function init() {
 
       // Initial visualization with the first ID
       updateVisualizations(data.names[0], data);
-      console.log("Data: ", data)
   });
 }
-
 
 // Function to update visualizations
 function updateVisualizations(selectedID, data) {
   // Filter data based on the selected ID
-  let sampleData = data.samples.find(sample => sample.id === selectedID);
+  const sampleData = data.samples.find(sample => sample.id === selectedID);
 
   // Create the bar chart
   createBarChart(sampleData);
@@ -28,7 +26,6 @@ function updateVisualizations(selectedID, data) {
 
   // Display metadata
   displayMetadata(selectedID, data);
-  console.log("Metadata: ", sampleData)
 }
 
 // Function to create the bar chart
@@ -38,13 +35,8 @@ function createBarChart(sampleData) {
   const labels = sampleData.otu_ids.slice(0, 10).reverse().map(id => `OTU ${id}`);
   const hoverText = sampleData.otu_labels.slice(0, 10).reverse();
 
-  //log the values
-  console.log(top10)
-  console.log(labels)
-  console.log(hoverText)
-
   // Create the bar chart
-  let trace = {
+  const trace = {
       x: top10,
       y: labels,
       text: hoverText,
@@ -52,11 +44,10 @@ function createBarChart(sampleData) {
       orientation: "h"
   };
 
-  let data = [trace];
-  console.log(trace)
+  const data = [trace];
 
-  let layout = {
-      title: ("Top 10 OTUs"),
+  const layout = {
+      title: "Top 10 OTUs",
       xaxis: { title: "Sample Values" }
   };
 
@@ -66,7 +57,7 @@ function createBarChart(sampleData) {
 // Function to create the bubble chart
 function createBubbleChart(sampleData) {
   // Create the bubble chart
-  let trace = {
+  const trace = {
       x: sampleData.otu_ids,
       y: sampleData.sample_values,
       text: sampleData.otu_labels,
@@ -78,9 +69,9 @@ function createBubbleChart(sampleData) {
       }
   };
 
-  let data = [trace];
+  const data = [trace];
 
-  let layout = {
+  const layout = {
       title: "OTU Bubble Chart",
       xaxis: { title: "OTU IDs" },
       yaxis: { title: "Sample Values" }
@@ -108,11 +99,8 @@ function displayMetadata(selectedID, data) {
 function optionChanged(selectedID) {
   d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json").then(data => {
       updateVisualizations(selectedID, data);
-      console.log("Selcted ID:", selectedID)
-      console.log("OTU DATA: ", data.otu_ids)
   });
 }
-  
 
 // Initialize the page
 init();
